@@ -1,6 +1,9 @@
 import OverviewCard from '../components/OverviewCard';
 import RecentSales from '../components/RecentDividends';
 import Chart from '../components/Chart';
+import { useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { supabase } from '@/lib/supabaseClient';
 
 export default function DashboardPage() {
   // Mock data (replace with dynamic data fetching)
@@ -57,6 +60,21 @@ export default function DashboardPage() {
       logo: '/images/google-logo.png',
     },
   ];
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const success = searchParams.get('success');
+
+  useEffect(() => {
+    if (success) {
+      // Refresh the session to reflect the updated role
+      supabase.auth.refreshSession().then(({ data: { user } }) => {
+        if (user) {
+          router.push('/dashboard');
+        }
+      });
+    }
+  }, [success, router]);
 
   return (
     <>

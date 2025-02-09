@@ -1,7 +1,8 @@
-// app/layout.tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { cn } from "@/lib/utils";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-nearBlack text-gray-100">{children}</body>
+      <body  
+        // className="bg-nearBlack text-gray-100"
+        className={cn(
+          "min-h-screen font-sans antialiased grainy",
+          inter.className
+        )}
+        >{children}</body>
     </html>
   );
 }
